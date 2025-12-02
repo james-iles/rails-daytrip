@@ -1,8 +1,43 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-12 text-center">
-      <h1>Welcome to DayTrip 🗺️</h1>
-      <h3>The quick and simple travel planner for your big day in the city!</h3>
+      <div class="banner-hero d-flex align-items-center justify-content-center mb-5">
+        <div class="hero-content">
+          <% if user_signed_in? %>
+            <h1 class="display-5 fw-bold">Create your next itinerary!</h1>
+            <p class="lead">Plan the perfect one-day city adventure.</p>
+          <% else %>
+            <h1 class="display-5 fw-bold">Welcome to DayTrip</h1>
+            <p class="lead">Your perfect day, planned in seconds.</p>
+          <% end %>
+        </div>
+      </div>
+
+      <div>
+        <% if user_signed_in? %>
+        <%= simple_form_for @city do |f| %>
+        <%= f.input :name, label: "Which city would you like to explore?", placeholder: "e.g. Barcelona, Tokyo, Paris" %>
+        <div class="mb-3">
+          <label class="form-label">What are you interested in?</label>
+          <div class="d-flex flex-wrap gap-2">
+            <div class="btn-group" role="group">
+              <% @filter_options.each do |option| %>
+                <input type="checkbox" class="btn-check" id="<%= option.parameterize %>"
+                      name="city[filters][]" value="<%= option %>">
+                <label class="btn btn-outline-primary" for="<%= option.parameterize %>">
+                  <%= option %>
+                </label>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <%= f.submit "Plan my day!", class: "btn btn-success btn-lg mt-5" %>
+        <% end %>
+        <% else %>
+            <h1 class="display-5 fw-bold">Sign Up Now!</h1>
+            <p class="lead">Some other logic...</p>
+          <% end %>
+      </div>
     </div>
   </div>
 </div>

@@ -1,5 +1,6 @@
 class CitiesController < ApplicationController
   def create
+    raise
   end
 
   def show
