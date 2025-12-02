@@ -3,7 +3,6 @@ class PagesController < ApplicationController
 
   def home
     @city = City.new
-
     @filter_options = [
               "Coffee",
               "Breakfast",
