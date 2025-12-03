@@ -4,11 +4,10 @@ class CitiesController < ApplicationController
     @city = City.new(city_params)
     @user_id = current_user.id
     @city.user_id = @user_id
-    # raise
     if @city.save
       redirect_to city_path(@city) # Redirects to new city trip, needs to be a new chat with prompt.
     else
-      # What? We don't use a new city action...
+      render root
     end
   end
 
