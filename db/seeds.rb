@@ -8,4 +8,8 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-City.create(name: "London", filters: "coffee shop, gyms, nightclubs", itinerary: "Best Coffee, James' Gyms, Nightclub101")
+city = City.create(
+  name: "Paris",
+  filters: ["Culture & Museums", "Coffee Shops", "Shopping"],
+  user: User.first
+)
