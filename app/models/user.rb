@@ -7,3 +7,4 @@ class User < ApplicationRecord
   has_many :cities, dependent: :destroy
 
 end
+  

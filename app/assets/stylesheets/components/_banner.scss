@@ -1,0 +1,30 @@
+.banner-hero {
+  position: relative;
+  height: 500px;
+  width: 100%;
+  background-image: image-url("paris_landscape.jpg");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+  }
+
+  .hero-content {
+    z-index: 2;
+    padding: 20px;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  }
+}
