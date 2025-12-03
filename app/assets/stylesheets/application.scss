@@ -30,3 +30,28 @@
   background-color: white;
   text-align: center;
 }
+
+//-------------- Internary page
+.hover-shadow:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  background-color: #f8f9fa;
+  transition: all 0.2s ease;
+}
+
+.itinerary-content .option{
+  border-left: 4px solid #0d6efd;
+  border-radius: 5px;
+  background-color: #f8f9fa;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 5px 5px #c7c7c7;
+}
+
+.pro-tips {
+  border-left: 4px solid #fd9800;
+  border-radius: 5px;
+  background-color: #f8ff94;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 5px 5px #c7c7c7;
+}
