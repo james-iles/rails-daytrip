@@ -1,6 +1,8 @@
 class MessagesController < ApplicationController
 
 def create
+  # raise
+
   @chat = current_user.chats.find(params[:chat_id])
   @city = @chat.city
 
@@ -9,15 +11,19 @@ def create
   @message.role = "user"
 
     if @message.save
+
       system_prompt = build_system_prompt(@city)
-
       ruby_llm_chat = RubyLLM.chat
-      response = ruby_llm_chat.with_instructions(system_prompt).ask(@message.content)
 
-      Message.create(role: "assistant", content: response.content, chat: @chat)
-      # Save itinerary to city
+      user_input = if @message.content.present?
+                    "Additional things to consider: #{@message.content}"
+                  else
+                    "No additional considerations"
+                  end
+      response = ruby_llm_chat.with_instructions(system_prompt).ask(user_input)
+
+      Message.create!(role: "assistant", content: response.content, chat: @chat)
       @city.update(itinerary: response.content)
-
       redirect_to chat_path(@chat)
     else
       render "chats/show", status: :unprocessable_entity
@@ -34,9 +40,9 @@ def build_system_prompt(city)
     # Handle filters as array
     if city.filters.present? && city.filters.any?
       filters_text = city.filters.reject(&:blank?).join(", ")
-      interest_section = "USER INTERESTS: #{filters_text}"
+      # interest_section = "USER INTERESTS: #{filters_text}"
     else
-      interest_section = "Create a well-rounded itinerary showcasing #{city.name}'s highlights."
+      filters_text = "#{city.name}'s general and most popular highlights."
     end
 
      <<~PROMPT

@@ -1,5 +1,6 @@
 <div class="container">
-<%= link_to "← #{@chat.city.name}", city_path(@chat.city) %>
+  <%# Hide this button until LLM Chat has been asked. Add a class in the message#create code %>
+<%# <%= button_to "View my final #{@chat.city.name} trip", city_path(@chat.city), method: :get, class: "btn btn-success" %>
 
 <h1 id="chat_title"><%= @chat.title %></h1>
 
@@ -7,7 +8,7 @@
   <% @chat.messages.each do |message| %>
     <% if message.role == "user" %>
       <div class="d-flex justify-content-end mb-2">
-        <div class="bg-white px-3 pb-0 pt-3 rounded-pill">
+        <div class="bg-white p-3 rounded-pill">
           <%= message.content.html_safe %>
         </div>
       </div>
@@ -23,8 +24,11 @@
 
 <div id="new_message_container">
   <%= simple_form_for [@chat, @message] do |f| %>
-    <%= f.input :content, label: "Ask a question", required: true, placeholder: "What do want to do?" %>
-    <%= f.button :submit, 'Ask LLM', class: 'btn btn-primary' %>
+    <%= f.input :content, label: "Anthing more to add?", required: true %>
+    <%= f.button :submit, 'Update my trip...', class: 'btn btn-primary' %>
   <% end %>
 </div>
+<div class="mt-3">
+<%= button_to "View my final #{@chat.city.name} trip", city_path(@chat.city), method: :get, class: "btn btn-success" %>
+<div>
 </div>
