@@ -5,18 +5,18 @@ class City < ApplicationRecord
   serialize :filters, type: Array, coder: YAML
   validates :name, presence: true
 
-  FILTER_OPTIONS = [
-  "Culture & Museums",
-  "Coffee Shops",
-  "Shopping",
-  "Nightlife",
-  "Food & Dining",
-  "Nature & Parks",
-  "History",
-  "Architecture",
-  "Local Markets",
-  "Photography",
-  "Budget-Friendly",
-  "Luxury Experiences"
-]
+#   FILTER_OPTIONS = [
+#   "Culture & Museums",
+#   "Coffee Shops",
+#   "Shopping",
+#   "Nightlife",
+#   "Food & Dining",
+#   "Nature & Parks",
+#   "History",
+#   "Architecture",
+#   "Local Markets",
+#   "Photography",
+#   "Budget-Friendly",
+#   "Luxury Experiences"
+# ]
 end

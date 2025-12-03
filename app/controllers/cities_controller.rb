@@ -1,13 +1,13 @@
 class CitiesController < ApplicationController
   def create
-    # raise
     @city = City.new(city_params)
-    @user_id = current_user.id
-    @city.user_id = @user_id
+    @city.user = current_user
+    # raise
     if @city.save
-      redirect_to city_path(@city) # Redirects to new city trip, needs to be a new chat with prompt.
+      @chat = Chat.create!(title: "*Todo: made dynamic*", city: @city, user: current_user)
+      redirect_to chat_path(@chat) # Redirects to new city trip, needs to be a new chat with prompt.
     else
-      render root
+      redirect_to root_path # Need to test this - is this the right location??
     end
   end
 

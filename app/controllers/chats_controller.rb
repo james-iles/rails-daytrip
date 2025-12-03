@@ -5,6 +5,7 @@ class ChatsController < ApplicationController
 
   @chat = Chat.new(title: "Untitled")
   @chat.city = @city
+  raise
   @chat.user = current_user
 
     if @chat.save
