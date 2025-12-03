@@ -12,4 +12,5 @@ city = City.create(
   name: "Paris",
   filters: ["Culture & Museums", "Coffee Shops", "Shopping"],
   user: User.first
+
 )
