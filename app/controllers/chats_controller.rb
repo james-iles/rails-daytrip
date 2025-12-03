@@ -3,8 +3,9 @@ class ChatsController < ApplicationController
   def create
   @city = City.find(params[:city_id])
 
-  @chat = Chat.new(title: "Untitled")
+  @chat = Chat.new(title: Chat::DEFAULT_TITLE) # generates a new title
   @chat.city = @city
+  raise
   @chat.user = current_user
 
     if @chat.save
