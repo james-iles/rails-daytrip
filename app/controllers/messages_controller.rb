@@ -1,5 +1,4 @@
 class MessagesController < ApplicationController
-
 def create
   @chat = current_user.chats.find(params[:chat_id])
   @city = @chat.city
@@ -7,17 +6,19 @@ def create
   @message = Message.new(message_params)
   @message.chat = @chat
   @message.role = "user"
+  @chat.generate_title_from_first_message # NEW
 
     if @message.save
       system_prompt = build_system_prompt(@city)
 
-      ruby_llm_chat = RubyLLM.chat
-      response = ruby_llm_chat.with_instructions(system_prompt).ask(@message.content)
+      @ruby_llm_chat = RubyLLM.chat
+      build_conversation_history
+      response = @ruby_llm_chat.with_instructions(system_prompt).ask(@message.content)
 
-      Message.create(role: "assistant", content: response.content, chat: @chat)
-      # Save itinerary to city
-      @city.update(itinerary: response.content)
-
+      #Message.create(role: "assistant", content: response.content, chat: @chat)
+      @chat.messages.create(role: "assistant", content: response.content)
+      #title generation is added
+      @chat.generate_title_from_first_message
       redirect_to chat_path(@chat)
     else
       render "chats/show", status: :unprocessable_entity
@@ -30,7 +31,13 @@ def create
     params.require(:message).permit(:content)
   end
 
-def build_system_prompt(city)
+  def build_conversation_history
+    @chat.messages.each do |message|
+    @ruby_llm_chat.add_message(message)
+    end
+  end
+
+  def build_system_prompt(city)
     # Handle filters as array
     if city.filters.present? && city.filters.any?
       filters_text = city.filters.reject(&:blank?).join(", ")
@@ -39,7 +46,7 @@ def build_system_prompt(city)
       interest_section = "Create a well-rounded itinerary showcasing #{city.name}'s highlights."
     end
 
-     <<~PROMPT
+<<~PROMPT
     You are a Local Travel Expert specializing in #{city.name}.
 
     USER PROFILE:
@@ -49,7 +56,7 @@ def build_system_prompt(city)
     TASK:
     Create a personalized day trip itinerary for #{city.name} that matches these specific interests: #{filters_text}
 
-    **CRITICAL: Provide exactly 3 options for each time slot**
+    **CRITICAL: Provide exactly 1 carefully curated recommendation for each time slot - your absolute best suggestion that perfectly matches their interests**
 
     **OUTPUT FORMAT - USE HTML:**
 
@@ -59,26 +66,46 @@ def build_system_prompt(city)
       <div class="time-slot">
         <h2>☀️ Morning: 9:00 AM - 11:00 AM | Activity Type</h2>
 
-        <div class="option">
-          <h3>Option 1: Place Name</h3>
-          <p>Description (1-2 sentences)</p>
-          <p class="details"><em>Best for: audience | Price: €/€€/€€€</em></p>
+        <div class="recommendation">
+          <img src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?w=800&h=400&fit=crop" alt="Place Name" class="place-image" onerror="this.style.display='none'">
+          <h3>Place Name</h3>
+          <p>Description (2-3 sentences explaining why this is the perfect choice)</p>
+          <p class="details"><em>Best for: audience | Duration: X hours | Price: €/€€/€€€</em></p>
         </div>
+      </div>
 
-        <div class="option">
-          <h3>Option 2: Place Name</h3>
+      <div class="time-slot">
+        <h2>☀️ Midday: 11:30 AM - 1:30 PM | Lunch</h2>
+
+        <div class="recommendation">
+          <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=400&fit=crop" alt="Restaurant Name" class="place-image" onerror="this.style.display='none'">
+          <h3>Restaurant/Café Name</h3>
           <p>Description</p>
-          <p class="details"><em>Best for: audience | Price: €/€€/€€€</em></p>
+          <p class="details"><em>Cuisine: type | Price: €/€€/€€€</em></p>
         </div>
+      </div>
 
-        <div class="option">
-          <h3>Option 3: Place Name</h3>
+      <div class="time-slot">
+        <h2>🌤️ Afternoon: 2:00 PM - 5:00 PM | Activity Type</h2>
+
+        <div class="recommendation">
+          <img src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?w=800&h=400&fit=crop" alt="Place Name" class="place-image" onerror="this.style.display='none'">
+          <h3>Place Name</h3>
+          <p>Description</p>
+          <p class="details"><em>Best for: audience | Duration: X hours | Price: €/€€/€€€</em></p>
+        </div>
+      </div>
+
+      <div class="time-slot">
+        <h2>🌆 Evening: 6:00 PM - 9:00 PM | Activity Type</h2>
+
+        <div class="recommendation">
+          <img src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?w=800&h=400&fit=crop" alt="Place Name" class="place-image" onerror="this.style.display='none'">
+          <h3>Place Name</h3>
           <p>Description</p>
           <p class="details"><em>Best for: audience | Price: €/€€/€€€</em></p>
         </div>
       </div>
-
-      <!-- Repeat for Afternoon and Evening -->
 
       <div class="pro-tips">
         <h2>💡 Pro Tips</h2>
@@ -90,6 +117,12 @@ def build_system_prompt(city)
       </div>
     </div>
 
+    IMAGE REQUIREMENTS:
+    - For each recommendation, use relevant Unsplash image URLs
+    - Format: https://images.unsplash.com/photo-XXXXXXXXX?w=800&h=400&fit=crop
+    - Search for actual Unsplash photos related to #{city.name} landmarks/venues
+    - Include onerror="this.style.display='none'" as fallback
+    - Use descriptive alt text for each image
     REQUIREMENTS:
     - Output ONLY HTML (no markdown)
     - All places must be REAL locations in #{city.name}

@@ -9,8 +9,7 @@
 #   end
 
 city = City.create(
-  name: "Paris",
-  filters: ["Culture & Museums", "Coffee Shops", "Shopping"],
+  name: "Kyoto",
+  filters: ["Local Markets", "Photography", "Shopping"],
   user: User.first
-
 )
