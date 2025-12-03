@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col">
       <h1><%= @city.name %></h1>
-      <p> <%= @city.itinerary %> </p>
+      <p> <%= @city.itinerary.html_safe %> </p>
     </div>
     <div class="col-md-3">
       <h2>Trip Chats:</h2>
@@ -17,7 +17,7 @@
           There are no chats yet.
         <% end %>
       </div>
-      <%= button_to "New chat", city_chats_path(@city), class: "btn btn-primary" %>
+      <%= button_to " chat", city_chats_path(@city), class: "btn btn-primary" %>
     </div>
   </div>
 </div>
