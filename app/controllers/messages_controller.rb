@@ -13,7 +13,7 @@ def create
     if @message.save
 
       system_prompt = build_system_prompt(@city)
-      ruby_llm_chat = RubyLLM.chat
+      @ruby_llm_chat = RubyLLM.chat
       build_conversation_history
       @chat.generate_title_from_first_message
       user_input = if @message.content.present?
@@ -21,7 +21,7 @@ def create
                   else
                     "No additional considerations"
                   end
-      response = ruby_llm_chat.with_instructions(system_prompt).ask(user_input)
+      response = @ruby_llm_chat.with_instructions(system_prompt).ask(user_input)
 
       Message.create!(role: "assistant", content: response.content, chat: @chat)
       @city.update(itinerary: response.content)
