@@ -1,6 +1,5 @@
 class MessagesController < ApplicationController
 def create
-  # raise
 
   @chat = current_user.chats.find(params[:chat_id])
   @city = @chat.city
@@ -17,10 +16,8 @@ def create
       build_conversation_history
       if @message.content.present?
         user_input = "Additional things to consider: #{@message.content}"
-        # raise
       else
         user_input = "No additional considerations"
-        # raise
       end
       response = @ruby_llm_chat.with_instructions(system_prompt).ask(user_input)
       Message.create!(role: "assistant", content: response.content, chat: @chat)
