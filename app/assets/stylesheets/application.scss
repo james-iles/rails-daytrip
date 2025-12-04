@@ -55,3 +55,33 @@
   margin-bottom: 1rem;
   box-shadow: 5px 5px #c7c7c7;
 }
+
+//-----------Save button notes
+.postit {
+  background-color: #fff537bb;
+  padding: 20px;
+  width: 300px;
+  border-radius: 12px;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.postit .form-inputs {
+  flex: 1;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.saveNbtn {
+  font-weight: bold;
+  padding: 6px 12px;
+}
+#ntitle {
+  font-size: 18px;
+}
