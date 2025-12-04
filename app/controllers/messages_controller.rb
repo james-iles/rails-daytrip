@@ -1,8 +1,7 @@
-# app/controllers/messages_controller.rb
 class MessagesController < ApplicationController
-def create
-    #@chat = current_user.chats.find(params[:chat_id])
-    #@city = @chat.city
+  def create
+    @chat = current_user.chats.find(params[:chat_id])
+    @city = @chat.city
     @message = Message.new(message_params)
     @message.chat = @chat
     @message.role = "user"
@@ -187,73 +186,81 @@ def create
     PROMPT
   end
 
+  # ✅ FIXED VERSION - Works with Nokogiri fragments
   def enhance_with_google_photos(ai_response, city)
-  return ai_response if ai_response.blank?
+    return ai_response if ai_response.blank?
 
-  photo_service = GooglePlacesPhotoService.new
-  doc = Nokogiri::HTML.fragment(ai_response)
+    Rails.logger.info "🎨 Starting photo enhancement for #{city.name}"
 
-  # Find all recommendations
-  doc.css('.recommendation').each do |recommendation|
-    # Get place name from data attribute (most reliable)
-    place_name = recommendation['data-place-name']
+    photo_service = GooglePlacesPhotoService.new
+    doc = Nokogiri::HTML.fragment(ai_response)
 
-    # Fallback to h3 if data attribute is missing
-    place_name ||= recommendation.at_css('h3')&.text&.strip
+    # Find all recommendations
+    recommendations = doc.css('.recommendation')
+    Rails.logger.info "📋 Found #{recommendations.count} recommendations"
 
-    next unless place_name.present?
+    recommendations.each_with_index do |recommendation, index|
+      # Get place name from data attribute (most reliable)
+      place_name = recommendation['data-place-name']
 
-    Rails.logger.info "🔍 Fetching photo for: #{place_name} in #{city.name}"
+      # Fallback to h3 if data attribute is missing
+      place_name ||= recommendation.at_css('h3')&.text&.strip
 
-    # Get photo from Google Places
-    photo_url = photo_service.get_place_photo(place_name, city.name)
+      next unless place_name.present?
 
-    # 👇 REPLACE FROM HERE
-    if photo_url
-      puts "photo_url", photo_url
-      img_tag = recommendation.at_css('img.place-image')
+      Rails.logger.info "🔍 Fetching photo for: #{place_name} in #{city.name}"
 
-      # Create img tag if it doesn't exist
-      unless img_tag
-        h3_tag = recommendation.at_css('h3')
-        if h3_tag
-          img_tag = doc.create_element('img',
-            class: 'place-image',
-            alt: place_name
-          )
-          h3_tag.add_previous_sibling(img_tag)
+      # Get photo from Google Places
+      photo_url = photo_service.get_place_photo(place_name, city.name)
+
+      if photo_url
+        Rails.logger.info "✅ Photo URL received: #{photo_url[0..80]}..."
+
+        img_tag = recommendation.at_css('img.place-image')
+
+        if img_tag
+          # Update existing img tag
+          img_tag['src'] = photo_url
+          img_tag.remove_attribute('style') # Remove display:none
+          img_tag['onerror'] = "this.style.display='none'"
+          img_tag['loading'] = 'lazy'
+          Rails.logger.info "✅ Updated existing img tag"
+        else
+          # Create new img tag - Fixed version that works with fragments
+          h3_tag = recommendation.at_css('h3')
+          if h3_tag
+            # Build img tag as HTML string and parse it
+            img_html = %Q(<img src="#{photo_url}" alt="#{place_name}" class="place-image" loading="lazy" onerror="this.style.display='none'">)
+            img_node = Nokogiri::HTML.fragment(img_html).children.first
+            h3_tag.add_previous_sibling(img_node)
+            Rails.logger.info "✅ Created and inserted new img tag"
+          end
         end
-      end
 
-      if img_tag
-        img_tag['src'] = photo_url
-        img_tag.remove_attribute('style') # Remove display:none
-        img_tag['onerror'] = "this.style.display='none'" # Fallback if image fails
-
-        # Add photo credit
+        # Add photo credit if not exists
         unless recommendation.at_css('.photo-credit')
-          credit = doc.create_element('p',
-            'Photo: Google Maps',
-            class: 'photo-credit'
-          )
-          img_tag.add_next_sibling(credit)
+          credit_html = '<p class="photo-credit">Photo: Google Maps</p>'
+          credit_node = Nokogiri::HTML.fragment(credit_html).children.first
+          img_tag = recommendation.at_css('img.place-image')
+          img_tag.add_next_sibling(credit_node) if img_tag
+          Rails.logger.info "✅ Photo credit added"
         end
+      else
+        Rails.logger.warn "❌ No photo found for #{place_name}"
 
-        Rails.logger.info "✅ Photo found and added for #{place_name}"
+        # Hide placeholder if it exists
+        img_tag = recommendation.at_css('img.place-image')
+        img_tag['style'] = 'display:none' if img_tag
       end
-    else
-      Rails.logger.warn "❌ No photo found for #{place_name}"
     end
-    # 👆 TO HERE
-  end
 
-  doc.to_html
-rescue StandardError => e
-  Rails.logger.error "❌ Error enhancing with Google photos: #{e.message}"
-  Rails.logger.error e.backtrace.join("\n")
-  # Return original response if enhancement fails
-  ai_response
-end
+    Rails.logger.info "✅ Photo enhancement complete"
+    doc.to_html
+  rescue StandardError => e
+    Rails.logger.error "❌ Error enhancing with Google photos: #{e.message}"
+    Rails.logger.error e.backtrace.join("\n")
+    ai_response
+  end
 
   def message_params
     params.require(:message).permit(:content)
@@ -261,7 +268,9 @@ end
 
   def build_conversation_history
     @chat.messages.select {|m| m.content != "" }.each do |message|
-    @ruby_llm_chat.add_message(message)
+      @ruby_llm_chat.add_message(message)
     end
   end
 end
+
+
