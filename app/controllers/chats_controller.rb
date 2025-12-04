@@ -5,7 +5,6 @@ class ChatsController < ApplicationController
 
   @chat = Chat.new(title: Chat::DEFAULT_TITLE) # generates a new title
   @chat.city = @city
-  raise
   @chat.user = current_user
 
     if @chat.save

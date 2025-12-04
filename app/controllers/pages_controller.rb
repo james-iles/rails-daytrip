@@ -6,16 +6,26 @@ class PagesController < ApplicationController
     @filter_options = [
               "Coffee",
               "Breakfast",
-              "Gyms",
               "Brunch",
-              "Museums",
               "Lunch",
               "Quick Bites",
-              "Nightlife",
               "Restaurants",
+              "Bakeries",
+              "Bars",
+              "Gyms",
+              "Yoga Studios",
+              "Hiking",
+              "Parks",
               "Nature",
+              "Beaches",
+              "Museums",
+              "Art Galleries",
               "Landmarks",
-              "Shopping"
+              "Shopping",
+              "Markets",
+              "Nightlife",
+              "Live Music",
+              "Unique Experiences",
             ]
   end
 end
