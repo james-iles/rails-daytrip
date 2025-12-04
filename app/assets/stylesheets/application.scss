@@ -38,7 +38,7 @@
   transition: all 0.2s ease;
 }
 
-.itinerary-content .option{
+.itinerary-content .recommendation{
   border-left: 4px solid #0d6efd;
   border-radius: 5px;
   background-color: #f8f9fa;
@@ -55,3 +55,21 @@
   margin-bottom: 1rem;
   box-shadow: 5px 5px #c7c7c7;
 }
+.place-image {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.photo-credit {
+  font-size: 0.75rem;
+  color: #666;
+  font-style: italic;
+  margin-top: -4px;
+  margin-bottom: 12px;
+}
+
+
+
