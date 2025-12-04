@@ -8,8 +8,43 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-city = City.create(
-  name: "Kyoto",
-  filters: ["Local Markets", "Photography", "Shopping"],
-  user: User.first
-)
+# db/seeds.rb
+
+filter_options = [
+  "Coffee",
+  "Breakfast",
+  "Gyms",
+  "Brunch",
+  "Museums",
+  "Lunch",
+  "Quick Bites",
+  "Nightlife",
+  "Restaurants",
+  "Nature",
+  "Landmarks",
+  "Shopping"
+]
+
+city_names = [
+  "Barcelona",
+  "London",
+  "Paris",
+  "Berlin",
+  "Rome",
+  "Amsterdam",
+  "Lisbon",
+  "New York",
+  "Tokyo",
+  "Sydney"
+]
+
+city_names.each do |city|
+  City.create!(
+    name: city,
+    filters: filter_options.sample(rand(2..4)),
+    user_id: rand(1..15)
+    puts "Seeded #{city}"
+  )
+end
+
+puts "Seeded #{city_names.size} cities..."

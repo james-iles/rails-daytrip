@@ -16,13 +16,14 @@ def create
       @ruby_llm_chat = RubyLLM.chat
       build_conversation_history
       @chat.generate_title_from_first_message
-      user_input = if @message.content.present?
-                    "Additional things to consider: #{@message.content}"
-                  else
-                    "No additional considerations"
-                  end
+      if @message.content.present?
+        user_input = "Additional things to consider: #{@message.content}"
+        # raise
+      else
+        user_input = "No additional considerations"
+        # raise
+      end
       response = @ruby_llm_chat.with_instructions(system_prompt).ask(user_input)
-
       Message.create!(role: "assistant", content: response.content, chat: @chat)
       @city.update(itinerary: response.content)
 
@@ -39,7 +40,7 @@ def create
   end
 
   def build_conversation_history
-    @chat.messages.each do |message|
+    @chat.messages.select {|m| m.content != "" }.each do |message|
     @ruby_llm_chat.add_message(message)
     end
   end
