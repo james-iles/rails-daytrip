@@ -1,9 +1,8 @@
 # app/controllers/messages_controller.rb
 class MessagesController < ApplicationController
-  def create
-    @chat = current_user.chats.find(params[:chat_id])
-    @city = @chat.city
-
+def create
+    #@chat = current_user.chats.find(params[:chat_id])
+    #@city = @chat.city
     @message = Message.new(message_params)
     @message.chat = @chat
     @message.role = "user"

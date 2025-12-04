@@ -3,16 +3,11 @@
     <div class="col-12 text-center">
       <div class="banner-hero d-flex align-items-center justify-content-center mb-5">
         <div class="hero-content">
-          <% if user_signed_in? %>
-            <h1 class="display-5 fw-bold">Create your next itinerary!</h1>
-            <p class="lead">Plan the perfect one-day city adventure.</p>
-          <% else %>
             <h1 class="display-5 fw-bold">Welcome to DayTrip</h1>
-            <p class="lead">Your perfect day, planned in seconds.</p>
-          <% end %>
+            <p class="lead">Plan the perfect one-day city adventure.</p>
+            <%= link_to "Plan Your Trip", new_user_session_path, class: "btn btn-primary btn-lg m-2" %>
         </div>
       </div>
-
       <div>
         <% if user_signed_in? %>
         <%= simple_form_for @city do |f| %>
@@ -21,23 +16,62 @@
           <label class="form-label">What are you interested in?</label>
           <div class="d-flex flex-wrap gap-2">
             <div class="btn-group" role="group">
-              <% @filter_options.each do |option| %>
-                <input type="checkbox" class="btn-check" id="<%= option.parameterize %>"
-                      name="city[filters][]" value="<%= option %>">
-                <label class="btn btn-outline-primary" for="<%= option.parameterize %>">
-                  <%= option %>
-                </label>
-              <% end %>
+
+              <div class="d-flex flex-wrap justify-content-center gap-2 my-3">
+                <% @filter_options.each do |option| %>
+                  <input type="checkbox" class="btn-check" id="<%= option.parameterize %>"
+                        name="city[filters][]" value="<%= option %>">
+                  <label class="btn btn-outline-primary" for="<%= option.parameterize %>">
+                    <%= option %>
+                  </label>
+                <% end %>
+              </div>
             </div>
           </div>
         </div>
-        <%= f.submit "Plan my day!", class: "btn btn-success btn-lg mt-5" %>
+        <%= f.submit "Plan my day!", class: "btn btn-success btn-lg my-5" %>
         <% end %>
         <% else %>
-            <h1 class="display-5 fw-bold">Sign Up Now!</h1>
-            <p class="lead">Some other logic...</p>
+            <section class="py-3">
+              <div class="container">
+                <h2 class="text-center mb-5">Why Daytrip?</h2>
+                <div class="row text-center">
+                  <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                      <div class="card-body">
+                        <h5 class="card-title">Curated Trips</h5>
+                        <p class="card-text">Create one-day itineraries, tailored to your specific interests.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                      <div class="card-body">
+                        <h5 class="card-title">Easy Planning</h5>
+                        <p class="card-text">Plan an entire day's adventure in a few quick steps.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                      <div class="card-body">
+                        <h5 class="card-title">Remove Decisions</h5>
+                        <p class="card-text">Tell Daytrip what matters and we'll take care of the details.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
           <% end %>
       </div>
     </div>
   </div>
 </div>
+<footer class="py-4">
+  <div class="container text-center">
+    <p class="mb-2">&copy; 2025 Daytrip. All rights reserved.</p>
+    <%= link_to "Log In", new_user_session_path, class: "btn btn-outline-primary btn-sm m-2" %>
+    <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-outline-primary btn-sm m-2" %>
+  </div>
+</footer>

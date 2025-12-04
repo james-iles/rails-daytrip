@@ -1,0 +1,18 @@
+<div class="container">
+  <h1 class="mb-4">My Trips</h1>
+
+    <% if @cities.any? %>
+      <div class="list-group">
+        <% @cities.each do |city| %>
+          <%= link_to city_path(city), class: "list-group-item list-group-item-action" do %>
+            <strong><%= city.name %></strong>
+            <small class="text-muted d-block">Created <%= time_ago_in_words(city.created_at) %> ago</small>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <p>You haven't created any trips yet.</p>
+      <%= link_to "Plan Your First Trip", root_path, class: "btn btn-primary mt-3" %>
+    <% end %>
+
+  </div>
