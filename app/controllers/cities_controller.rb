@@ -4,7 +4,7 @@ class CitiesController < ApplicationController
     @city.user = current_user
     # raise
     if @city.save
-      @chat = Chat.create!(title: "*Todo: made dynamic*", city: @city, user: current_user)
+      @chat = Chat.create!(title: Chat::DEFAULT_TITLE, city: @city, user: current_user)
       redirect_to chat_path(@chat) # Redirects to new city trip, needs to be a new chat with prompt.
     else
       redirect_to root_path # Need to test this - is this the right location??
