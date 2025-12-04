@@ -17,6 +17,15 @@ class CitiesController < ApplicationController
     @chats = @city.chats.where(user: current_user) # If we want to view the chat on the city page?
   end
 
+  def update
+    @city = City.find(params[:id])
+    if @city.update(city_params)
+      redirect_to @city, notice: "Notes saved successfully!"
+    else
+      redirect_to @city, alert: "Failed to save notes."
+    end
+  end
+
   private
 
   def city_params

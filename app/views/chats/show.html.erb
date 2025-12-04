@@ -21,7 +21,6 @@
     <% end %>
   <% end %>
 </div>
-
 <div id="new_message_container">
   <%= simple_form_for [@chat, @message] do |f| %>
     <%= f.input :content, label: "Anthing more to add?", required: true %>
