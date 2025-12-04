@@ -27,7 +27,7 @@
   padding: 2rem;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
   border-radius: 8px;
-  background-color: white;
+  background-color: $blush;
   text-align: center;
 }
 
@@ -48,9 +48,10 @@
 }
 
 .pro-tips {
-  border-left: 4px solid #fd9800;
+  border-left: 4px solid $rose;
+  color: $slate;
   border-radius: 5px;
-  background-color: #f8ff94;
+  background-color: $blush;
   padding: 1rem;
   margin-bottom: 1rem;
   box-shadow: 5px 5px #c7c7c7;

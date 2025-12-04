@@ -8,7 +8,7 @@
   <% @chat.messages.each do |message| %>
     <% if message.role == "user" %>
       <div class="d-flex justify-content-end mb-2">
-        <div class="bg-white p-3 rounded-pill">
+        <div class="bg-white p-3 rounded-pill" style="color: black;">
           <%= message.content.html_safe %>
         </div>
       </div>
@@ -26,9 +26,9 @@
     <% if @chat.messages.any? { |m| m.content.present? } %>
       <%= f.input :content, label: "Chat about your trip...", required: false %>
     <% else %>
-      <%= f.input :content, label: "Anthing more to add?", required: false %>
+      <%= f.input :content, label: "Anything more to add?", required: false %>
     <% end %>
-    <%= f.button :submit, 'Update my trip...', class: 'btn btn-primary' %>
+    <%= f.button :submit, 'Submit', class: 'btn btn-primary' %>
   <% end %>
 </div>
 <% if @chat.messages.any? { |m| m.content.present? } %>
