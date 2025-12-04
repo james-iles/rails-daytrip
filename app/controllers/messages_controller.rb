@@ -15,7 +15,6 @@ def create
       system_prompt = build_system_prompt(@city)
       @ruby_llm_chat = RubyLLM.chat
       build_conversation_history
-      @chat.generate_title_from_first_message
       if @message.content.present?
         user_input = "Additional things to consider: #{@message.content}"
         # raise
@@ -26,7 +25,7 @@ def create
       response = @ruby_llm_chat.with_instructions(system_prompt).ask(user_input)
       Message.create!(role: "assistant", content: response.content, chat: @chat)
       @city.update(itinerary: response.content)
-
+      @chat.generate_title_from_first_message
       redirect_to chat_path(@chat)
     else
       render "chats/show", status: :unprocessable_entity

@@ -38,11 +38,18 @@ city_names = [
   "Sydney"
 ]
 
+users = User.create!([
+  { email: "test1@test.com", password: "password" },
+  { email: "test2@test.com", password: "password" },
+  { email: "test3@test.com", password: "password" },
+  { email: "test4@test.com", password: "password" },
+])
+
 city_names.each do |city|
   City.create!(
     name: city,
     filters: filter_options.sample(rand(2..4)),
-    user_id: rand(1..15)
+    user: users.sample
   )
 end
 
