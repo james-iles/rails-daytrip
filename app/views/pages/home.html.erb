@@ -1,13 +1,16 @@
-<div class="container">
+
   <div class="row justify-content-center">
     <div class="col-12 text-center">
       <div class="banner-hero d-flex align-items-center justify-content-center mb-5">
         <div class="hero-content">
             <h1 class="display-5 fw-bold">Welcome to DayTrip</h1>
             <p class="lead">Plan the perfect one-day city adventure.</p>
+            <% if !user_signed_in? %>
             <%= link_to "Plan Your Trip", new_user_session_path, class: "btn btn-primary btn-lg m-2" %>
+            <% end %>
         </div>
       </div>
+      <div class="container">
       <div>
         <% if user_signed_in? %>
         <%= simple_form_for @city do |f| %>
@@ -21,7 +24,7 @@
                 <% @filter_options.each do |option| %>
                   <input type="checkbox" class="btn-check" id="<%= option.parameterize %>"
                         name="city[filters][]" value="<%= option %>">
-                  <label class="btn btn-outline-primary" for="<%= option.parameterize %>">
+                  <label class="btn btn-outline-warning" for="<%= option.parameterize %>">
                     <%= option %>
                   </label>
                 <% end %>
@@ -29,7 +32,7 @@
             </div>
           </div>
         </div>
-        <%= f.submit "Plan my day!", class: "btn btn-success btn-lg my-5" %>
+        <%= f.submit "Plan my day!", class: "btn btn-warning btn-lg my-5" %>
         <% end %>
         <% else %>
             <section class="py-3">
