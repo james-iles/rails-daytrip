@@ -36,7 +36,19 @@
           <% end %>
         </div>
       </div>
+      <div class="mb-4">
+      <%= simple_form_for @city do |f| %>
+  <div class="postit">
+    <div id="ntitle">
+    <%= f.input :notes, label: "Notes", as: :text, input_html: { rows: 5 } %>
     </div>
+    <div class="button-container">
+      <%= f.button :submit, "Save", class: "saveNbtn btn btn-success" %>
+    </div>
+  </div>
+<% end %>
 
+      </div>
+    </div>
   </div>
 </div>

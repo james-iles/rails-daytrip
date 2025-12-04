@@ -43,7 +43,6 @@ city_names.each do |city|
     name: city,
     filters: filter_options.sample(rand(2..4)),
     user_id: rand(1..15)
-    puts "Seeded #{city}"
   )
 end
 
