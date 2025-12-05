@@ -42,7 +42,7 @@ class MessagesController < ApplicationController
         format.html { render "chats/show", status: :unprocessable_entity }
     end
   end
-
+end
   private
 
   def build_system_prompt(city)

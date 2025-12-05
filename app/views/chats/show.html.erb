@@ -6,10 +6,10 @@
 <h1 id="chat_title"><%= @chat.title %></h1>
 
 <div id="messages">
-  <%= render "messages/messages", messages: @chat.messages %>
+  <%= render "chats/chats", messages: @chat.messages %>
 </div>
 <div id="new_message_container">
-  <%= render "messages/form", chat: @chat, message: @message %>
+  <%= render "chats/form", chat: @chat, message: @message %>
 </div>
 <% if @chat.messages.any? { |m| m.content.present? } %>
   <div class="mt-3">
