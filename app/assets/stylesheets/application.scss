@@ -83,6 +83,11 @@
   margin-bottom: 12px;
 }
 
+.list-group-item-action:not(.active):hover {
+  background-color: $rose;
+  color: white;
+}
+
 //-------------- Trip Chats Styling --------------
 .tripchats .card-header {
   background-color: $blush !important;
