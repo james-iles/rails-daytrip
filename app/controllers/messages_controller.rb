@@ -83,58 +83,67 @@ class MessagesController < ApplicationController
       **HTML STRUCTURE - FOLLOW EXACTLY:**
 
       <div class="itinerary">
-        <p class="intro">Write a compelling 2-sentence intro about the day's theme and what makes this itinerary special for #{city.name}#{city.date.present? ? " in #{(city.date.is_a?(String) ? Date.parse(city.date) : city.date).strftime('%B %Y')}" : ""}.</p>
+        <p class="intro">Write a compelling 2-sentence intro about the day's theme and what makes this itinerary special for (#{city.name}#{city.date.present? ? " in #{(city.date.is_a?(String) ? Date.parse(city.date) : city.date).strftime('%B %Y')}" : ""}.</p>
 
-        <div class="time-slot">
-          <h2>☀️ Morning: 9:00 AM - 11:00 AM | Activity Type</h2>
+        <div class="citycard">
+          <div class="time-slot">
+            <h2 class="cityTitle">☀️ Morning: 9:00 AM - 11:00 AM | Activity Type</h2>
 
-          <div class="recommendation" data-place-name="EXACT PLACE NAME HERE">
-            <img src="placeholder" alt="EXACT PLACE NAME" class="place-image" style="display:none;">
-            <h3>EXACT PLACE NAME (Official Name)</h3>
-            <p class="address">Full street address, #{city.name}</p>
-            <p class="description">2-3 sentences explaining why this is perfect. Be specific about what makes this place special#{city.date.present? ? " and why it's great to visit in #{(city.date.is_a?(String) ? Date.parse(city.date) : city.date).strftime('%B')}" : ""}.</p>
-            <p class="details"><em>Best for: #{filters_text} | Duration: X hours | Price: €/€€/€€€</em></p>
+            <div class="recommendation" data-place-name="EXACT PLACE NAME HERE">
+              <img src="placeholder" alt="EXACT PLACE NAME" class="place-image" style="display:none;">
+              <h3 class="titlecard">EXACT PLACE NAME (Official Name)</h3>
+              <p class="address">Full street address, #{city.name}</p>
+              <p class="description">2-3 sentences explaining why this is perfect. Be specific about what makes this place special#{city.date.present? ? " and why it's great to visit in #{(city.date.is_a?(String) ? Date.parse(city.date) : city.date).strftime('%B')}" : ""}.</p>
+              <p class="details"><em>Best for: #{filters_text} | Duration: X hours | Price: €/€€/€€€</em></p>
+            </div>
           </div>
         </div>
 
-        <div class="time-slot">
-          <h2>☀️ Midday: 11:30 AM - 1:30 PM | Lunch</h2>
+        <div class="citycard">
+          <div class="time-slot">
+            <h2 class="cityTitle">☀️ Midday: 11:30 AM - 1:30 PM | Lunch</h2>
 
-          <div class="recommendation" data-place-name="EXACT RESTAURANT NAME HERE">
-            <img src="placeholder" alt="EXACT RESTAURANT NAME" class="place-image" style="display:none;">
-            <h3>EXACT RESTAURANT NAME</h3>
-            <p class="address">Full street address, #{city.name}</p>
-            <p class="description">Why this restaurant is perfect. Mention signature dishes or unique atmosphere#{city.date.present? ? ". Note any seasonal menu items available in #{(city.date.is_a?(String) ? Date.parse(city.date) : city.date).strftime('%B')}" : ""}.</p>
-            <p class="details"><em>Cuisine: type | Signature dish: dish name | Price: €/€€/€€€</em></p>
+            <div class="recommendation" data-place-name="EXACT RESTAURANT NAME HERE">
+              <img src="placeholder" alt="EXACT RESTAURANT NAME" class="place-image" style="display:none;">
+              <h3>EXACT RESTAURANT NAME</h3>
+              <p class="address">Full street address, #{city.name}</p>
+              <p class="description">Why this restaurant is perfect. Mention signature dishes or unique atmosphere#{city.date.present? ? ". Note any seasonal menu items available in #{(city.date.is_a?(String) ? Date.parse(city.date) : city.date).strftime('%B')}" : ""}.</p>
+              <p class="details"><em>Cuisine: type | Signature dish: dish name | Price: €/€€/€€€</em></p>
+            </div>
           </div>
         </div>
 
-        <div class="time-slot">
-          <h2>🌤️ Afternoon: 2:00 PM - 5:00 PM | Activity Type</h2>
+        <div class="citycard">
+          <div class="time-slot">
+            <h2 class="cityTitle">🌤️ Afternoon: 2:00 PM - 5:00 PM | Activity Type</h2>
 
-          <div class="recommendation" data-place-name="EXACT PLACE NAME HERE">
-            <img src="placeholder" alt="EXACT PLACE NAME" class="place-image" style="display:none;">
-            <h3>EXACT PLACE NAME</h3>
-            <p class="address">Full street address, #{city.name}</p>
-            <p class="description">Description with specific details about what to see or do here.</p>
-            <p class="details"><em>Best for: #{filters_text} | Duration: X hours | Price: €/€€/€€€</em></p>
+            <div class="recommendation" data-place-name="EXACT PLACE NAME HERE">
+             <img src="placeholder" alt="EXACT PLACE NAME" class="place-image" style="display:none;">
+              <h3>EXACT PLACE NAME</h3>
+              <p class="address">Full street address, #{city.name}</p>
+              <p class="description">Description with specific details about what to see or do here.</p>
+             <p class="details"><em>Best for: #{filters_text} | Duration: X hours | Price: €/€€/€€€</em></p>
+           </div>
           </div>
         </div>
 
-        <div class="time-slot">
-          <h2>🌆 Evening: 6:00 PM - 9:00 PM | Dinner/Activity</h2>
+        <div class="citycard">
+          <div class="time-slot">
+            <h2 class="cityTitle">🌆 Evening: 6:00 PM - 9:00 PM | Dinner/Activity</h2>
 
-          <div class="recommendation" data-place-name="EXACT PLACE NAME HERE">
-            <img src="placeholder" alt="EXACT PLACE NAME" class="place-image" style="display:none;">
-            <h3>EXACT PLACE NAME</h3>
-            <p class="address">Full street address, #{city.name}</p>
-            <p class="description">Why this is the perfect end to the day.</p>
-            <p class="details"><em>Best for: #{filters_text} | Price: €/€€/€€€</em></p>
+            <div class="recommendation" data-place-name="EXACT PLACE NAME HERE">
+             <img src="placeholder" alt="EXACT PLACE NAME" class="place-image" style="display:none;">
+             <h3>EXACT PLACE NAME</h3>
+              <p class="address">Full street address, #{city.name}</p>
+              <p class="description">Why this is the perfect end to the day.</p>
+              <p class="details"><em>Best for: #{filters_text} | Price: €/€€/€€€</em></p>
+           </div>
           </div>
-        </div>
+         </div>
+
 
         <div class="pro-tips">
-          <h2>💡 Pro Tips for #{city.name}</h2>
+          <h2>💡 Pro Tips for #{city.name.capitalize}</h2>
           <ul>
             <li><strong>Transportation:</strong> Practical tip about getting around #{city.name}</li>
             <li><strong>Local Insider:</strong> A hidden gem or local secret most tourists miss</li>
