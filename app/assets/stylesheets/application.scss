@@ -71,3 +71,8 @@
   margin-top: -4px;
   margin-bottom: 12px;
 }
+
+.list-group-item-action:not(.active):hover {
+  background-color: $rose;
+  color: white;
+}
