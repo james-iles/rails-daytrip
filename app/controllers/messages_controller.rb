@@ -27,12 +27,20 @@ class MessagesController < ApplicationController
 
       @city.update(itinerary: enhanced_response)
       @chat.generate_title_from_first_message
-      redirect_to chat_path(@chat)
+
+      #respond to turbo stream requests
+      respond_to do |format|
+          format.turbo_stream # renders `app/views/messages/create.turbo_stream.erb`
+          format.html { redirect_to chat_path(@chat) }
+        end
+
     else
-      render "chats/show", status: :unprocessable_entity
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("new_message", partial: "messages/form", locals: { chat: @chat, message: @message }) }
+        format.html { render "chats/show", status: :unprocessable_entity }
     end
   end
-
+end
   private
 
   def build_system_prompt(city)
