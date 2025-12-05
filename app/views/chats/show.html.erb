@@ -1,35 +1,15 @@
 <div class="container">
   <%# Hide this button until LLM Chat has been asked. Add a class in the message#create code %>
 <%# <%= button_to "View my final #{@chat.city.name} trip", city_path(@chat.city), method: :get, class: "btn btn-success" %>
+<%= link_to "← #{@chat.city.name}", city_path(@chat.city) %>
 
 <h1 id="chat_title"><%= @chat.title %></h1>
 
 <div id="messages">
-  <% @chat.messages.each do |message| %>
-    <% if message.role == "user" %>
-      <div class="d-flex justify-content-end mb-2">
-        <div class="bg-white p-3 rounded-pill" style="color: black;">
-          <%= message.content.html_safe %>
-        </div>
-      </div>
-    <% elsif message.role == "assistant" %>
-      <div class="d-flex justify-content-start mb-5">
-        <div class="px-3 pb-0 pt-3">
-          <%= message.content.html_safe %>
-        </div>
-      </div>
-    <% end %>
-  <% end %>
+  <%= render "messages/messages", messages: @chat.messages %>
 </div>
 <div id="new_message_container">
-  <%= simple_form_for [@chat, @message] do |f| %>
-    <% if @chat.messages.any? { |m| m.content.present? } %>
-      <%= f.input :content, label: "Chat about your trip...", required: false %>
-    <% else %>
-      <%= f.input :content, label: "Anything more to add?", required: false %>
-    <% end %>
-    <%= f.button :submit, 'Submit', class: 'btn btn-primary' %>
-  <% end %>
+  <%= render "messages/form", chat: @chat, message: @message %>
 </div>
 <% if @chat.messages.any? { |m| m.content.present? } %>
   <div class="mt-3">

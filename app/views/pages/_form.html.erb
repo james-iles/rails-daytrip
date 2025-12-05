@@ -1,0 +1,8 @@
+ <%= simple_form_for [chat, message] do |f| %>
+    <% if chat.messages.any? { |m| m.content.present? } %>
+      <%= f.input :content, label: "Chat about your trip...", required: false %>
+    <% else %>
+      <%= f.input :content, label: "Anything more to add?", required: false %>
+    <% end %>
+    <%= f.button :submit, 'Submit', class: 'btn btn-primary' %>
+  <% end %>
