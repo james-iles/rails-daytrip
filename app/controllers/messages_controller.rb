@@ -27,8 +27,6 @@ class MessagesController < ApplicationController
 
       @city.update(itinerary: enhanced_response)
       @chat.generate_title_from_first_message
-      redirect_to chat_path(@chat)
-
 
       #respond to turbo stream requests
       respond_to do |format|

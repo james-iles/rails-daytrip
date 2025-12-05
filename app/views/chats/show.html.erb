@@ -2,14 +2,15 @@
   <%# Hide this button until LLM Chat has been asked. Add a class in the message#create code %>
 <%# <%= button_to "View my final #{@chat.city.name} trip", city_path(@chat.city), method: :get, class: "btn btn-success" %>
 <%= link_to "← #{@chat.city.name}", city_path(@chat.city) %>
+<%= turbo_stream_from @chat %>
 
 <h1 id="chat_title"><%= @chat.title %></h1>
 
 <div id="messages">
-  <%= render "chats/chats", messages: @chat.messages %>
+  <%= render "messages/messages", messages: @chat.messages %>
 </div>
 <div id="new_message_container">
-  <%= render "chats/form", chat: @chat, message: @message %>
+  <%= render "messages/form", chat: @chat, message: @message %>
 </div>
 <% if @chat.messages.any? { |m| m.content.present? } %>
   <div class="mt-3">
