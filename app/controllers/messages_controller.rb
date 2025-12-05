@@ -186,7 +186,6 @@ class MessagesController < ApplicationController
     PROMPT
   end
 
-  # ✅ FIXED VERSION - Works with Nokogiri fragments
   def enhance_with_google_photos(ai_response, city)
     return ai_response if ai_response.blank?
 
@@ -272,5 +271,3 @@ class MessagesController < ApplicationController
     end
   end
 end
-
-
