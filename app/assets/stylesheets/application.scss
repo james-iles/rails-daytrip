@@ -11,9 +11,7 @@
 @import "components/index";
 @import "pages/index";
 
-
-//-----------LOGIN---------------
-
+//----------- LOGIN ---------------
 .login-container {
   display: flex;
   justify-content: center;
@@ -31,31 +29,44 @@
   text-align: center;
 }
 
-//-------------- Internary page
+//-------------- Itinerary Page ---------------
 .hover-shadow:hover {
   box-shadow: 0 4px 8px rgba(0,0,0,0.15);
   background-color: #f8f9fa;
   transition: all 0.2s ease;
 }
 
-.itinerary-content .recommendation{
-  border-left: 4px solid #0d6efd;
+.titlecard{
+  color: white;
+}
+.citycard {
+  border-left: 4px solid #ce795b;
   border-radius: 5px;
-  background-color: #f8f9fa;
+  background-color: #e7ad99;
   padding: 1rem;
   margin-bottom: 1rem;
-  box-shadow: 5px 5px #c7c7c7;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  color: $slate;
+}
+
+.place-image{
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.cityTitle {
+  background-color: #e7ad99;
 }
 
 .pro-tips {
-  border-left: 4px solid $rose;
+  border-left: 4px solid #C18c5d;
   color: $slate;
   border-radius: 5px;
-  background-color: $blush;
+  background-color: #ECC8AF;
   padding: 1rem;
   margin-bottom: 1rem;
-  box-shadow: 5px 5px #c7c7c7;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
+
 .place-image {
   width: 100%;
   max-height: 400px;
@@ -72,5 +83,46 @@
   margin-bottom: 12px;
 }
 
+//-------------- Trip Chats Styling --------------
+.tripchats .card-header {
+  background-color: $blush !important;
+  border-bottom: none;
+}
+
+.tripchats .card-header h4 {
+  color: $slate !important;
+  font-weight: bold;
+}
+
+//-------------- Notes Section --------------
+.postit {
+  padding: 1rem;
 
 
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.saveNbtn {
+  background-color: $rose !important;
+  border: none !important;
+  color: white !important;
+  font-weight: bold;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+}
+
+.trip-item {
+  color: white;              // normal text color
+  transition: all 0.2s ease; // smooth transition
+}
+
+.trip-item:hover {
+  color: $slate;                // text color on hover
+  background-color: rgba(255, 255, 255, 0.719);  // background color on hover
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
