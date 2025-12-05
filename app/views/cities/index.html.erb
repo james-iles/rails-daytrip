@@ -2,7 +2,7 @@
   <h1 class="mb-4">My Trips</h1>
 
     <% if @cities.any? %>
-      <div class="list-group">
+      <div class="list-group list-group-flush">
         <% @cities.each do |city| %>
           <%= link_to city_path(city), class: "list-group-item list-group-item-action" do %>
             <strong><%= city.name %></strong>

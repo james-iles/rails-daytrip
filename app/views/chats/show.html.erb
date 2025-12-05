@@ -2,7 +2,7 @@
   <%# Hide this button until LLM Chat has been asked. Add a class in the message#create code %>
 <%# <%= button_to "View my final #{@chat.city.name} trip", city_path(@chat.city), method: :get, class: "btn btn-success" %>
 
-<h1 id="chat_title"><%= @chat.title %></h1>
+<h1 id="chat_title" class="m-3"><%= @chat.title %></h1>
 
 <div id="messages">
   <% @chat.messages.each do |message| %>
@@ -33,7 +33,7 @@
 </div>
 <% if @chat.messages.any? { |m| m.content.present? } %>
   <div class="mt-3">
-    <%= button_to "View my final #{@chat.city.name} trip", city_path(@chat.city), method: :get, class: "btn btn-success" %>
+    <%= button_to "View My Trip", city_path(@chat.city), method: :get, class: "btn btn-success" %>
   </div>
 <% end %>
 </div>
