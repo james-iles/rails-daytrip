@@ -31,7 +31,7 @@ class GooglePlacesPhotoService
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_PEER
-    http.ca_file = OpenSSL::X509::DEFAULT_CERT_FILE
+    # http.ca_file = OpenSSL::X509::DEFAULT_CERT_FILE
 
     request = Net::HTTP::Get.new(uri)
 
