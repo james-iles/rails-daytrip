@@ -54,6 +54,7 @@ gem "sassc-rails"
 gem 'google_maps_service'
 gem "kramdown"
 gem 'nokogiri'
+gem "rack-attack"
 
 
 group :development, :test do
