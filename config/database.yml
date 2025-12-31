@@ -79,6 +79,4 @@ test:
 #
 production:
   <<: *default
-  database: rails_daytrip_production
-  username: rails_daytrip
-  password: <%= ENV["RAILS_DAYTRIP_DATABASE_PASSWORD"] %>
+  url: <%= ENV["DATABASE_URL"] %>
